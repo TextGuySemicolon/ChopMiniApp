@@ -21,6 +21,11 @@
           if (user) {
             console.log("Authenticated user:", user);
             // You can pass `user` data to Unity if needed
+
+            // Pass the user data as a JSON string to Unity
+            const userDataJson = JSON.stringify(user);
+            unityInstance.SendMessage('Telegram', 'OnAuthenticated', userDataJson);
+
           } else {
             console.error("User authentication failed or user data not available.");
           }
