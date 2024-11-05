@@ -12,12 +12,12 @@
     <script>
       // Initialize Telegram WebApp
       window.onload = function() {
-        unityInstance.SendMessage('Telegram', 'OnAuthenticated', "try load");
+        SendMessage('Telegram', 'OnAuthenticated', "try load");
 
         if (window.Telegram && window.Telegram.WebApp) {
           const tg = window.Telegram.WebApp;
 
-          unityInstance.SendMessage('Telegram', 'OnAuthenticated', tg);
+          SendMessage('Telegram', 'OnAuthenticated', tg);
           tg.expand(); // Optional: Expand the Web App to full height.
 
           // Use this to get the user data for authentication
@@ -28,7 +28,7 @@
 
             // Pass the user data as a JSON string to Unity
             const userDataJson = JSON.stringify(user);
-            unityInstance.SendMessage('Telegram', 'OnAuthenticated', userDataJson);
+            SendMessage('Telegram', 'OnAuthenticated', userDataJson);
 
           } else {
             console.error("User authentication failed or user data not available.");
@@ -94,7 +94,7 @@
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Chop",
         productName: "ChopMiniApp",
-        productVersion: "1.0",
+        productVersion: "1.0.2",
         showBanner: unityShowBanner,
       };
 
