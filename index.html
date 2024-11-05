@@ -12,8 +12,12 @@
     <script>
       // Initialize Telegram WebApp
       window.onload = function() {
+        unityInstance.SendMessage('Telegram', 'OnAuthenticated', "try load");
+
         if (window.Telegram && window.Telegram.WebApp) {
           const tg = window.Telegram.WebApp;
+
+          unityInstance.SendMessage('Telegram', 'OnAuthenticated', tg);
           tg.expand(); // Optional: Expand the Web App to full height.
 
           // Use this to get the user data for authentication
