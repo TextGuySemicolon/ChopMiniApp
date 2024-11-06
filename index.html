@@ -9,35 +9,6 @@
 
     <!-- Include Telegram Web App script -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-      // Initialize Telegram WebApp
-      window.onload = function() {
-        SendMessage('Telegram', 'OnAuthenticated', "try load");
-
-        if (window.Telegram && window.Telegram.WebApp) {
-          const tg = window.Telegram.WebApp;
-
-          SendMessage('Telegram', 'OnAuthenticated', tg);
-          tg.expand(); // Optional: Expand the Web App to full height.
-
-          // Use this to get the user data for authentication
-          const user = tg.initDataUnsafe?.user;
-          if (user) {
-            console.log("Authenticated user:", user);
-            // You can pass `user` data to Unity if needed
-
-            // Pass the user data as a JSON string to Unity
-            const userDataJson = JSON.stringify(user);
-            SendMessage('Telegram', 'OnAuthenticated', userDataJson);
-
-          } else {
-            console.error("User authentication failed or user data not available.");
-          }
-        } else {
-          console.error("Telegram WebApp SDK not loaded.");
-        }
-      };
-    </script>
 
   </head>
   <body>
@@ -128,6 +99,8 @@
 
       document.querySelector("#unity-loading-bar").style.display = "block";
 
+
+      var myUnityInstance;
       var script = document.createElement("script");
       script.src = loaderUrl;
       script.onload = () => {
@@ -137,15 +110,29 @@
                 document.querySelector("#unity-loading-bar").style.display = "none";
                 document.querySelector("#unity-fullscreen-button").onclick = () => {
                   unityInstance.SetFullscreen(1);
+                  unityInstance.SendMessage('Telegram', 'OnAuthenticated', "try load");
                 };
+                myUnityInstance = unityInstance;
 
               }).catch((message) => {
                 alert(message);
               });
-            };
+        };
 
       document.body.appendChild(script);
-
+      function f1(value)
+      {
+        const authData = Telegram.WebApp.initData;
+        myUnityInstance.SendMessage('Telegram', 'OnAuthenticated', authData);
+      }
     </script>
+
+    <div id = "main">
+        <select onchange="f1(this.value)">
+        <option value = ""></option>
+        <option value = "1">1</option>
+        <option value = "2">2</option>
+      </select>
+    </div>
   </body>
 </html>
