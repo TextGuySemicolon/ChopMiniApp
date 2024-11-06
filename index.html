@@ -132,7 +132,7 @@
           const authData = Telegram.WebApp.initData;
           console.log("Telegram auth data:", authData);  // Debugging line
           if (myUnityInstance) {
-            myUnityInstance.SendMessage('Telegram', 'OnAuthenticated', authData);
+            myUnityInstance.SendMessage('Telegram', 'OnAuthenticated', JSON.stringify(authData));
           } else {
             myUnityInstance.SendMessage('Telegram', 'OnAuthenticated', "Unity instance not available");
             console.error("Unity instance not available");
