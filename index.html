@@ -9,6 +9,35 @@
 
     <!-- Include Telegram Web App script -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+      // Initialize Telegram WebApp
+      window.onload = function() {
+        SendMessage('Telegram', 'OnAuthenticated', "try load");
+
+        if (window.Telegram && window.Telegram.WebApp) {
+          const tg = window.Telegram.WebApp;
+
+          SendMessage('Telegram', 'OnAuthenticated', tg);
+          tg.expand(); // Optional: Expand the Web App to full height.
+
+          // Use this to get the user data for authentication
+          const user = tg.initDataUnsafe?.user;
+          if (user) {
+            console.log("Authenticated user:", user);
+            // You can pass `user` data to Unity if needed
+
+            // Pass the user data as a JSON string to Unity
+            const userDataJson = JSON.stringify(user);
+            SendMessage('Telegram', 'OnAuthenticated', userDataJson);
+
+          } else {
+            console.error("User authentication failed or user data not available.");
+          }
+        } else {
+          console.error("Telegram WebApp SDK not loaded.");
+        }
+      };
+    </script>
 
   </head>
   <body>
@@ -65,7 +94,7 @@
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Chop",
         productName: "ChopMiniApp",
-        productVersion: "1.0.2",
+        productVersion: "1.0.3",
         showBanner: unityShowBanner,
       };
 
@@ -99,7 +128,7 @@
 
       document.querySelector("#unity-loading-bar").style.display = "block";
 
-
+      //added by JY
       var myUnityInstance;
       var script = document.createElement("script");
       script.src = loaderUrl;
@@ -111,14 +140,16 @@
                 document.querySelector("#unity-fullscreen-button").onclick = () => {
                   unityInstance.SetFullscreen(1);
                 };
+
+                //added by JY
                 myUnityInstance = unityInstance;
+
                 // Delay the SendMessage call slightly to allow Unity to be ready
                 setTimeout(() => {
-                  // Check if Telegram is defined
+                  // Check if Telegram SDK is available
                   if (typeof Telegram !== 'undefined' && Telegram.WebApp.initData) {
-                    LoadTelegram();  // Ensure Telegram SDK is initialized
+                    LoadTelegram();
                   } else {
-                    myUnityInstance.SendMessage('Telegram', 'OnAuthenticated', "Telegram SDK not ready");
                     console.error("Telegram SDK not ready");
                   }
                 }, 100);  // Adjust the delay as needed
@@ -126,20 +157,20 @@
               }).catch((message) => {
                 alert(message);
               });
-        };
+            };
 
-        function LoadTelegram() {
-          const authData = Telegram.WebApp.initData;
-          console.log("Telegram auth data:", authData);  // Debugging line
-          if (myUnityInstance) {
-            myUnityInstance.SendMessage('Telegram', 'OnAuthenticated', JSON.stringify(authData));
-          } else {
-            myUnityInstance.SendMessage('Telegram', 'OnAuthenticated', "Unity instance not available");
-            console.error("Unity instance not available");
-          }
-        }
+            function LoadTelegram() {
+              const authData = Telegram.WebApp.initData;
+              console.log("Telegram auth data:", authData);  // Debugging line
+              if (myUnityInstance) {
+                myUnityInstance.SendMessage('Telegram', 'OnAuthenticated', JSON.stringify(authData));
+              } else {
+                console.error("Unity instance not available");
+              }
+            }
 
       document.body.appendChild(script);
+
     </script>
   </body>
 </html>
