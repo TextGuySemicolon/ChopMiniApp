@@ -110,9 +110,11 @@
                 document.querySelector("#unity-loading-bar").style.display = "none";
                 document.querySelector("#unity-fullscreen-button").onclick = () => {
                   unityInstance.SetFullscreen(1);
-                  unityInstance.SendMessage('Telegram', 'OnAuthenticated', "try load");
                 };
                 myUnityInstance = unityInstance;
+
+                const authData = Telegram.WebApp.initData;
+                myUnityInstance.SendMessage('Telegram', 'OnAuthenticated', authData);
 
               }).catch((message) => {
                 alert(message);
@@ -120,19 +122,6 @@
         };
 
       document.body.appendChild(script);
-      function f1(value)
-      {
-        const authData = Telegram.WebApp.initData;
-        myUnityInstance.SendMessage('Telegram', 'OnAuthenticated', authData);
-      }
     </script>
-
-    <div id = "main">
-        <select onchange="f1(this.value)">
-        <option value = ""></option>
-        <option value = "1">1</option>
-        <option value = "2">2</option>
-      </select>
-    </div>
   </body>
 </html>
