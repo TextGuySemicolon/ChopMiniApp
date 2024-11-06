@@ -112,14 +112,32 @@
                   unityInstance.SetFullscreen(1);
                 };
                 myUnityInstance = unityInstance;
-
-                const authData = Telegram.WebApp.initData;
-                myUnityInstance.SendMessage('Telegram', 'OnAuthenticated', authData);
+                // Delay the SendMessage call slightly to allow Unity to be ready
+                setTimeout(() => {
+                  // Check if Telegram is defined
+                  if (typeof Telegram !== 'undefined' && Telegram.WebApp.initData) {
+                    LoadTelegram();  // Ensure Telegram SDK is initialized
+                  } else {
+                    myUnityInstance.SendMessage('Telegram', 'OnAuthenticated', "Telegram SDK not ready");
+                    console.error("Telegram SDK not ready");
+                  }
+                }, 100);  // Adjust the delay as needed
 
               }).catch((message) => {
                 alert(message);
               });
         };
+
+        function LoadTelegram() {
+          const authData = Telegram.WebApp.initData;
+          console.log("Telegram auth data:", authData);  // Debugging line
+          if (myUnityInstance) {
+            myUnityInstance.SendMessage('Telegram', 'OnAuthenticated', authData);
+          } else {
+            myUnityInstance.SendMessage('Telegram', 'OnAuthenticated', "Unity instance not available");
+            console.error("Unity instance not available");
+          }
+        }
 
       document.body.appendChild(script);
     </script>
