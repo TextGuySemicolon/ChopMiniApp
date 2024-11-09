@@ -10,6 +10,39 @@
 
         <!-- Include Socket.IO from CDN -->
         <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+
+        <style>
+          /* Temporary background style while loading Unity */
+          body {
+            text-align: center;
+            padding: 0;
+            border: 0;
+            margin: 0;
+            background-color: #333; /* Set a background color */
+            background-image: url('background.png');
+            background-size: cover;
+            background-position: center;
+          }
+          /* Unity canvas style */
+          #unity-canvas {
+            width: 360px;
+            height: 640px;
+            background: transparent;
+          }
+          /* Hide the canvas while Unity loads */
+          #unity-canvas.loading {
+            display: none;
+          }
+          /* Loading message */
+          #loading-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 24px;
+          }
+        </style>
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
     <canvas id="unity-canvas" width=360 height=640 tabindex="-1" style="width: 360px; height: 640px; background: #231F20"></canvas>
