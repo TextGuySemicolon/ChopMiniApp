@@ -12,22 +12,11 @@
         <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
 
         <style>
-          /* Temporary background style while loading Unity */
-          body {
-            text-align: center;
-            padding: 0;
-            border: 0;
-            margin: 0;
-            background-color: #333; /* Set a background color */
-            background-image: url('background.png');
-            background-size: cover;
-            background-position: center;
-          }
           /* Unity canvas style */
           #unity-canvas {
             width: 360px;
             height: 640px;
-            background: transparent;
+            background-image: url('background.png');
           }
           /* Hide the canvas while Unity loads */
           #unity-canvas.loading {
@@ -72,7 +61,7 @@
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Chop",
         productName: "ChopMiniApp",
-        productVersion: "1.0.5",
+        productVersion: "1.0.6",
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
       }).then((unityInstance) => {
