@@ -88,5 +88,46 @@
                 alert(message);
               });
     </script>
+
+<h1>Purchase In-Game Item</h1>
+<button id="buy-button">Buy Chest</button>
+
+<script>
+    const botToken = '7503076774:AAGkG5gR2RVKjGXE480Bai59apAu3_Op9Ro';
+    const chatId = "1891169170";
+
+    // Initialize the Telegram Web App
+    Telegram.WebApp.ready();
+
+    document.getElementById("buy-button").onclick = function() {
+        sendInvoice();
+    };
+
+    function sendInvoice() {
+        // Send an invoice request to the bot
+        fetch(`https://api.telegram.org/bot${botToken}/sendInvoice`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                chat_id: chatId,
+                title: "In-Game Chest",
+                description: "Purchase in-game chest",
+                payload: "unique_payload",
+                currency: "XTR",
+                prices: [{ label: "Chest", amount: 900 }],
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.ok) {
+                console.log("Invoice sent successfully:", data.result);
+            } else {
+                console.error("Error sending invoice:", data);
+            }
+        });
+    }
+</script>
   </body>
 </html>
