@@ -61,7 +61,7 @@
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Chop",
         productName: "ChopMiniApp",
-        productVersion: "1.0.7",
+        productVersion: "1.0.8",
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
       }).then((unityInstance) => {
@@ -87,27 +87,6 @@
               }).catch((message) => {
                 alert(message);
               });
-    </script>
-
-<h1>Purchase In-Game Item</h1>
-<button id="buy-button">Buy Chest</button>
-
-<h1>Purchase In-Game Item</h1>
-    <button id="pay-button">Buy Item</button>
-
-    <script>
-        const botToken = '7503076774:AAGkG5gR2RVKjGXE480Bai59apAu3_Op9Ro';
-        const chatId = '1891169170';
-        const currency = 'USD';
-        const itemLabel = 'Item';
-        const amount = 900; // 900 = $9.00 in cents
-
-        document.getElementById("pay-button").onclick = function() {
-            const url = `tg://resolve?domain=chop_ton_bot&start=PAYLOAD`;
-
-            // Open Telegram payment prompt
-            window.location.href = url;
-        };
     </script>
   </body>
 </html>
