@@ -1,5 +1,5 @@
 {
     "url": "https://ton.vote", // site of your application, in non webgl build use any
     "name": "CHOP GAME", // project name, will be displayed in wallet 
-    "iconUrl": "https://github.com/TextGuySemicolon/ChopMiniApp/blob/main/Json/icon.PNG?raw=true" // project logo, will be displayed in wallet 
+    "iconUrl": "https://ton.vote/logo.png" // project logo, will be displayed in wallet 
   }
