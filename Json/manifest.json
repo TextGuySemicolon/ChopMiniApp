@@ -1,5 +1,5 @@
 {
     "url": "https://textguysemicolon.github.io/ChopMiniApp/", // site of your application, in non webgl build use any
     "name": "CHOP GAME", // project name, will be displayed in wallet 
-    "iconUrl": "https://drive.google.com/file/d/11XUh5zcQ4uisoq0uLucF3b82rar89Gzg/view?usp=sharing" // project logo, will be displayed in wallet 
+    "iconUrl": "https://github.com/TextGuySemicolon/ChopMiniApp/blob/main/Json/icon.PNG?raw=true" // project logo, will be displayed in wallet 
   }
