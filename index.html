@@ -89,6 +89,11 @@
       document.getElementsByTagName('head')[0].appendChild(meta);
       document.querySelector("#unity-container").className = "unity-mobile";
       canvas.className = "unity-mobile";
+
+      // Lock window size for Telegram Desktop
+      window.addEventListener('resize', () => {
+      window.resizeTo(400, 700); // Lock the window size
+    });
     } else {
       // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
       canvas.style.width = "360px";
@@ -97,11 +102,31 @@
       // Desktop style: Fixed canvas size, disable resizing
       document.querySelector("#unity-container").className = "unity-desktop";
       canvas.className = "unity-desktop";
+
+      // Lock window size for Telegram Desktop
+      window.addEventListener('resize', () => {
+      window.resizeTo(400, 700); // Lock the window size
+    });
     }
 
   //#endregion
 
+  //#region Telegram
+    let authData;
 
+    // Initialize Telegram API and retrieve authData
+    function initTelegram() {
+      return new Promise((resolve, reject) => {
+        if (typeof Telegram !== 'undefined' && Telegram.WebApp.initData) {
+          authData = Telegram.WebApp.initData;
+          console.log("Telegram auth data:", authData);  // Debugging line
+          resolve(authData);
+        } else {
+          reject("Telegram SDK not ready or initData missing");
+        }
+      });
+    }
+  //#endregion
 
   //#region Unity Instance
     var myUnityInstance;
@@ -120,46 +145,58 @@
 
           myUnityInstance = unityInstance;
 
-          if (myUnityInstance) {
-            myUnityInstance.SendMessage('Telegram', 'OnAuthenticated', authData);
-          } else {
-            console.error("Unity instance not initialized");
-          }
-        })
+          // Short delay to ensure Unity is ready
+          setTimeout(() => {
+            myUnityInstance.SendMessage('Telegram', 'DebugText', "Initialize");
+            if (authData && myUnityInstance) {
+              console.log("sending message to OnAuthenticated with " + authData)
+              myUnityInstance.SendMessage('Telegram', 'OnAuthenticated', authData);
+            } else {
+              console.error("Auth data or Unity instance not available");
+              myUnityInstance.SendMessage('Telegram', 'DebugText', "Telegram SDK not ready or initData missing");
+            }
+          }, 500);  // Adjust the delay as needed
+
+        }).catch((message) => {
+          alert(message);
+        });
       };
       document.body.appendChild(script);
     }
     //#endregion
 
-    
-    //#region Telegram
-    let authData;
-    document.addEventListener("DOMContentLoaded", () => {
-      if (typeof Telegram !== "undefined" && Telegram.WebApp.initData) {
-        authData = Telegram.WebApp.initData;
-        console.log("Telegram auth data:", authData);
-      } else {
-        console.error("Telegram SDK not ready or initData missing");
-      }
+    // Initialize Telegram and load Unity after authData is ready
+    initTelegram()
+    .then((authData) => {
+      loadUnity();
+    })
+    .catch((error) => {
+      console.error("Error initializing Telegram:", error);
+      loadUnity();  // Load Unity anyway, even if Telegram initialization fails
     });
-    //#endregion
 
-    if (window.Telegram.WebApp) {
+    if (window.Telegram.WebApp && myUnityInstance) {
         const backButton = window.Telegram.WebApp.BackButton;
 
-        if (window.Telegram.WebApp && myUnityInstance) {
-          window.Telegram.WebApp.BackButton.onClick(() => {
-          myUnityInstance.SendMessage("BackButtonHandler", "OnBackButtonPressed");
-        });
+        // Function to show the back button
+        function showBackButton() {
+            backButton.show();
+            backButton.onClick(function () {
+                // Notify Unity that the back button was pressed
+                myUnityInstance.SendMessage("BackButtonHandler", "OnBackButtonPressed");
+            });
+        }
 
         // Function to hide the back button
         function hideBackButton() {
             backButton.hide();
         }
+
+        // Optionally, hide the back button on app start
+        window.Telegram.WebApp.onEvent("viewportChanged", () => {
+            hideBackButton();
+        });
     }
-
-
-}
 
 </script>
 
