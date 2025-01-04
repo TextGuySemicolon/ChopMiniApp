@@ -58,16 +58,16 @@
 
   //#region Build Info
     var buildUrl = "Build";
-    var loaderUrl = buildUrl + "/06ab4f0fa4331af4413e8a250ee9fb33.loader.js";
+    var loaderUrl = buildUrl + "/7a9846ed0eb20c1b67e57e280e7bcfd0.loader.js";
     var config = {
       arguments: [],
-      dataUrl: buildUrl + "/3be539b513b51acabe6b6296f77fa25d.data.unityweb",
-      frameworkUrl: buildUrl + "/5e68e54de8074422aa29b7782e8fe9c9.framework.js.unityweb",
-          codeUrl: buildUrl + "/8588413c27b6f2f96fc5fa55653557d0.wasm.unityweb",
+      dataUrl: buildUrl + "/6e62b142988ffcdae2e4d1aacb5adbff.data.unityweb",
+      frameworkUrl: buildUrl + "/3019c6083d62f60e5dd3b8772d871cf4.framework.js.unityweb",
+          codeUrl: buildUrl + "/0a11f67124c4e802fb86d0fdcd4831ce.wasm.unityweb",
       streamingAssetsUrl: "StreamingAssets",
       companyName: "Chop",
       productName: "ChopMiniApp",
-      productVersion: "v1.4.6t6",
+      productVersion: "v1.4.6t7",
       showBanner: unityShowBanner,
     };
   //#endregion
@@ -153,6 +153,7 @@
             } else {
               console.error("Auth data or Unity instance not available");
               myUnityInstance.SendMessage('Telegram', 'DebugText', "Telegram SDK not ready or initData missing");
+              
             }
           }, 500);  // Adjust the delay as needed
 
