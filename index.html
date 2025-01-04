@@ -58,16 +58,16 @@
 
   //#region Build Info
     var buildUrl = "Build";
-    var loaderUrl = buildUrl + "/83ade2a46b58d12b89d82627275a9392.loader.js";
+    var loaderUrl = buildUrl + "/06ab4f0fa4331af4413e8a250ee9fb33.loader.js";
     var config = {
       arguments: [],
-      dataUrl: buildUrl + "/5b66d8c3e9eae86f78602451976f5da5.data.unityweb",
-      frameworkUrl: buildUrl + "/43d07aa301d62c8e12903d178b521012.framework.js.unityweb",
-          codeUrl: buildUrl + "/96b20333f4b696a5f851a106e737d885.wasm.unityweb",
+      dataUrl: buildUrl + "/3be539b513b51acabe6b6296f77fa25d.data.unityweb",
+      frameworkUrl: buildUrl + "/5e68e54de8074422aa29b7782e8fe9c9.framework.js.unityweb",
+          codeUrl: buildUrl + "/8588413c27b6f2f96fc5fa55653557d0.wasm.unityweb",
       streamingAssetsUrl: "StreamingAssets",
       companyName: "Chop",
       productName: "ChopMiniApp",
-      productVersion: "v1.4.6t4",
+      productVersion: "v1.4.6t6",
       showBanner: unityShowBanner,
     };
   //#endregion
@@ -149,7 +149,6 @@
           setTimeout(() => {
             myUnityInstance.SendMessage('Telegram', 'DebugText', "Initialize");
             if (authData && myUnityInstance) {
-              console.log("sending message to OnAuthenticated with " + authData)
               myUnityInstance.SendMessage('Telegram', 'OnAuthenticated', authData);
             } else {
               console.error("Auth data or Unity instance not available");
